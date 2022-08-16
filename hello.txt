@@ -1,0 +1,10 @@
+<h1 style='color:orange'>hello go lang</h1>
+<h2>how are you!</h2>
+<h3>i am fine</h3>
+<img id='i1' src='https://wx4.sinaimg.cn/mw2000/001qtNoPly1h2sthhgsncj61y22bcqq702.jpg'>
+<button id='b1'>点我</button
+<script>
+document.getElementById('b1').onclick=function(){
+
+}
+</script>
