@@ -38,8 +38,19 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/addtodo", func(c *gin.Context) {
+		//index.html请求后获取文本蓝提交的参数
+		title := c.PostForm("title")
+		status := c.PostForm("status")
+		//c.HTML(http.StatusOK, "index.html", gin.H{
+		//	"Title":  title,
+		//	"Status": status,
+		//})
+		fmt.Println(title)
+		fmt.Println(status)
 		var todo Todo
-		c.BindJSON(&todo)
+		todo.Title = title
+		todo.Status = status
+		fmt.Println(todo)
 		//写入数据库
 		if err = DB.Create(&todo).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
@@ -67,12 +78,26 @@ func main() {
 			c.JSON(http.StatusOK, gin.H{"error": "id不存在"})
 			return
 		}
-		if err = DB.Where("id=?", id).Delete(Todo{}).Error; err != nil {
+		if err = DB.Debug().Where("id=?", id).Delete(&Todo{}).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		} else {
 			c.JSON(http.StatusOK, gin.H{id: "was deleted"})
 		}
 	})
+
+	//r.DELETE("/todo/:title", func(c *gin.Context) {
+	//	title, ok := c.Params.Get("title")
+	//	fmt.Println(title)
+	//	if !ok {
+	//		c.JSON(http.StatusOK, gin.H{"error": "title不存在"})
+	//		return
+	//	}
+	//	if err = DB.Where("title=?", title).Delete(Todo{}).Error; err != nil {
+	//		c.JSON(http.StatusOK, gin.H{"error": err.Error()})
+	//	} else {
+	//		c.JSON(http.StatusOK, gin.H{title: "was deleted"})
+	//	}
+	//})
 
 	r.Run()
 }

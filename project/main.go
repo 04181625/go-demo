@@ -64,7 +64,7 @@ func main() {
 		var user User
 		DB.First(&user)
 		fmt.Println(user)
-		user.Name = "cxk"
+		user.Name = "hkh"
 		DB.Debug().Save(&user)
 	})
 
@@ -174,7 +174,7 @@ func main() {
 			c.JSON(http.StatusOK, gin.H{"error": "name不存在"})
 			return
 		}
-		if err = DB.Where("name=?", name).Delete(User{}).Error; err != nil {
+		if err = DB.Debug().Where("name=?", name).Delete(User{}).Error; err != nil {
 			c.JSON(http.StatusOK, gin.H{"error": err.Error()})
 		} else {
 			c.JSON(http.StatusOK, gin.H{name: "deleted"})
