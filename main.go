@@ -1,8 +1,8 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 //func sayHello(w http.ResponseWriter, r *http.Request) {
@@ -34,27 +34,32 @@ func sayHello(c *gin.Context) {
 }
 
 func main() {
-	r := gin.Default()
-	r.GET("/hello", sayHello)
-	r.GET("/book", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"method": "GET",
-		})
-	})
-	r.POST("/book", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"method": "POST",
-		})
-	})
-	r.PUT("/book", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"method": "PUT",
-		})
-	})
-	r.DELETE("/book", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"method": "DELETE",
-		})
-	})
-	r.Run(":9090")
+	//r := gin.Default()
+	//r.GET("/hello", sayHello)
+	//r.GET("/book", func(c *gin.Context) {
+	//	c.JSON(200, gin.H{
+	//		"method": "GET",
+	//	})
+	//})
+	//r.POST("/book", func(c *gin.Context) {
+	//	c.JSON(http.StatusOK, gin.H{
+	//		"method": "POST",
+	//	})
+	//})
+	//r.PUT("/book", func(c *gin.Context) {
+	//	c.JSON(http.StatusOK, gin.H{
+	//		"method": "PUT",
+	//	})
+	//})
+	//r.DELETE("/book", func(c *gin.Context) {
+	//	c.JSON(http.StatusOK, gin.H{
+	//		"method": "DELETE",
+	//	})
+	//})
+	//r.Run(":9090")
+	u := "http://accidentsrecordstest.wiltechs.com:8089"
+	url := fmt.Sprintf("%s/api/accident/injuredPlatform/createTicket", u)
+	fmt.Println(url)
+
+	//_, err = conn.Do("HSet", "user_id","jwttoken","astoken")
 }
