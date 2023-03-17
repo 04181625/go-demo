@@ -7,14 +7,17 @@ import (
 	"time"
 )
 
-type Car struct {
-	CreateDate          string `json:"CreateDate"`
-	VehicleSerialNumber string `json:"VehicleSerialNumber"`
-	Year                string `json:"Year"`
-	Make                string `json:"Make"`
-	Model               string `json:"Model"`
-	Id                  string `json:"Id"`
-}
+//	type Car struct {
+//		CreateDate          string `json:"CreateDate"`
+//		VehicleSerialNumber string `json:"VehicleSerialNumber"`
+//		Year                string `json:"Year"`
+//		Make                string `json:"Make"`
+//		Model               string `json:"Model"`
+//		Id string `json:"Idd"`
+//	}
+//type Test struct {
+//	Count string `json:"count"`
+//}
 
 func main() {
 	//url := "http://127.0.0.1:8888/api/app/ticket/create" //前面没有http报错 first path segment in URL cannot contain colon
@@ -76,13 +79,23 @@ func main() {
 		return
 	}
 	defer resp.Body.Close()
-	var cars []Car
-	err = json.NewDecoder(resp.Body).Decode(&cars)
+	//var cars []Car
+	//var test []Test
+	//var t []string
+	var todos []map[string]interface{}
+	//t := []string{}
+	err = json.NewDecoder(resp.Body).Decode(&todos)
 	if err != nil {
 		fmt.Println("JSON 解析失败:", err)
 		return
 	}
-	for _, car := range cars {
-		fmt.Printf("ID: %s, Model: %s, Number: %s\n", car.Id, car.Model, car.VehicleSerialNumber)
-	}
+	//for _, car := range cars {
+	//	fmt.Printf("ID: %s, Model: %s, Number: %s\n", car.Id, car.Model, car.VehicleSerialNumber)
+	//}
+	//for _, car := range cars {
+	//	fmt.Printf("ID: %s\n", car.Id)
+	//}
+	fmt.Println(todos)
+	fmt.Println(len(todos))
+
 }
