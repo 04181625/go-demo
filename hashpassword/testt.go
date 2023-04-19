@@ -62,10 +62,54 @@ func main() {
 
 	//fmt.Println(GetTimeFormMMDDYYYYHHmm("2023-03-27T15:06:25+08:00"))
 	//fmt.Println(GetTimeFormMMDDYYYYHHmm("2023-04-15T14:38:25+08:00"))
-	fmt.Println(GetTime("2023-04-15T00:11:25-07:00")) //pst时间
 	//fmt.Println(GetTimeFormMMDDYYYY("01/04/2009"))
 	//fmt.Println(GetTime("2009-01-04 00:00:00 -0800"))
+	//fmt.Println(TramsFor("04/15/2023 17:53"))
+	//fmt.Println(GetTime("2023-04-15 17:54:00 -0700 PDT"))
+	//fmt.Println(GetTime("2023-04-16T22:40:25-07:00")) //pst时间
 
+	// 定义输入字符串和输入格式
+	//input := "04/16/2023 19:40:25"
+	//inputFormat := "01/02/2006 15:04:05"
+	//t, err := time.Parse(inputFormat, input) //2023-04-16 19:40:25 +0000
+	//if err != nil {
+	//	fmt.Println("解析时间错误:", err)
+	//	return
+	//}
+	//location, err := time.LoadLocation("America/Los_Angeles")
+	//if err != nil {
+	//	fmt.Println("加载时区错误:", err)
+	//	return
+	//}
+	//t = t.In(location) //2023-04-16 12:40:25 -0700
+	//outputFormat := "2006-01-02T15:04:05-07:00"
+	//output := t.Format(outputFormat) //2023-04-16T12:40:25-07:00
+	//fmt.Println("输出时间:", output)
+}
+
+func Tr(date string) string {
+	t, err := time.Parse("01/02/2006 15:04", date)
+	if err != nil {
+		panic(err)
+	}
+	local := time.Now().Location()
+	nowInLocal := t.In(local)
+	fmt.Println(nowInLocal.Format(time.RFC3339))
+	return ""
+}
+
+//现在需要把输入的04/15/2023 17:54格式的字符串时间转换为2023-04-15T17:54:25-07:00格式的pst时间
+// 把2023-04-15T17:54:25-07:00格式的pst时间转换为2006-01-02 15:04格式的cst时间
+// GetTime后作为search数据库的条件
+
+func TramsFor(date string) string {
+	loc, _ := time.LoadLocation("Local")
+	t, err := time.ParseInLocation("01/02/2006 15:04", date, loc)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(t)
+	return ""
 }
 
 func GetTime(date string) string {
@@ -80,29 +124,18 @@ func GetTime(date string) string {
 	}
 	return ""
 }
-func GetTimeFormMMDDYYYYHHmm(date string) string { //CST
-	if date != "" {
-		t, err := time.Parse(time.RFC3339, date) //UTC时间
-		if err != nil {
-			panic(err)
-		}
-		timeForm := t.In(time.Now().Location())
-		return timeForm.Format("01/02/2006 15:04")
-	}
-	return ""
-}
 
-func GetTimeFormMMDDYYYYLocalTime(date string) string { //CST
-	t, err := time.Parse("2006-01-02 15:04:05 -0700 MST", date) //UTC时间
+func T() string {
+	input := "04/16/2023 19:40:25"
+	inputFormat := "01/02/2006 15:04:05"
+	t, err := time.Parse(inputFormat, input) //2023-04-16 19:40:25 +0000
 	if err != nil {
-		panic(err)
+		fmt.Println("解析时间错误:", err)
+		return ""
 	}
-	timeForm := t.In(time.Now().Location())
-	return timeForm.Format("01/02/2006")
-}
-
-func GetTimeFormMMDDYYYY(date string) string {
-	t, _ := time.ParseInLocation("01/02/2006", date, time.Local)
-	timeForm := t.Format("2006-01-02")
-	return timeForm
+	outputFormat := "2006-01-02T15:04:05-07:00"
+	output := t.Format(outputFormat) //2023-04-16T12:40:25-07:00
+	fmt.Println(output)
+	fmt.Println(GetTime(output))
+	return ""
 }
