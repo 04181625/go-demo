@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
 func main() {
-	//password := "9999"
-	//hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
-	//if err != nil {
-	//	fmt.Println("生成哈希密码失败:", err)
-	//	return
-	//}
-	//fmt.Println(hashedPassword)
-	//fmt.Println(string(hashedPassword))
-	//fmt.Println("helloworld!!!")
+	password := "9999" //$2a$10$qJZmW70FKLMorB6mt0iN.efr5ibX9FvQnxjQkdaM/.Jm8sxbTpBHm
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Println("生成哈希密码失败:", err)
+		return
+	}
+	fmt.Println(hashedPassword)
+	fmt.Println(string(hashedPassword))
+	fmt.Println("helloworld!!!")
 	//
 	//password = "8888"
 	//err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
