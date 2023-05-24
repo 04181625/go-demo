@@ -25,4 +25,16 @@ func main() {
 	fmt.Println("===========")
 	current := time.Now().UTC()
 	fmt.Println(current.Format("2006-01-02 15:04:05"))
+
+	a := "2023-05-09 05:56:39"
+	b, err := time.Parse("2006-01-02 15:04:05", a)
+	if err != nil {
+		fmt.Println(err)
+	}
+	pstTimezone, err := time.LoadLocation("America/Los_Angeles")
+	if err != nil {
+		fmt.Println("Failed to load PST timezone:", err)
+		return
+	}
+	fmt.Println(b.In(pstTimezone))
 }
