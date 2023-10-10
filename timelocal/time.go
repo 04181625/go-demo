@@ -71,6 +71,8 @@ func main() {
 	//GMT格林威治时
 	//UTC协调世界时
 	//
+
+	fmt.Println("123")
 }
 
 const (
