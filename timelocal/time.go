@@ -73,6 +73,8 @@ func main() {
 	//
 
 	fmt.Println("123")
+	fmt.Println("123")
+
 }
 
 const (
